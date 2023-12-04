@@ -48,22 +48,13 @@ int word_count(char *string)
  */
 char **tokenizer(char *string)
 {
-	char **token = NULL, *str = NULL, *word = NULL;
-	int len, counter = 0, words, w_len;
+	char **token = NULL, *word = NULL;
+	int counter = 0, words, w_len;
 
-	len = _strlen(string);
-	str = (char *)malloc(sizeof(char) * len);
-	if (!str)
-		return (NULL);
-
-	clear_buffer(str, len);
-
-	_strncpy(str, string, len - 1);
-
-	words = word_count(str);	
+	words = word_count(string);
 	token = malloc((words + 1) * sizeof(char *));
 
-	word = strtok(str, " ");
+	word = strtok(string, " ");
 	while (word != NULL)
 	{
 		w_len = _strlen(word) + 1;
@@ -93,6 +84,7 @@ char **tokenizer(char *string)
 void free_token(char **token, int length)
 {
 	int i;
+
 	for (i = 0; i < length; i++)
 	{
 		free(token[i]);
