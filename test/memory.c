@@ -37,22 +37,6 @@ char *buffer_alloc(int size)
 	clear_buffer(buffer, size);
 	return (buffer);
 }
-/**
- * clear_buffer - a fuction that clears existing data in allocated buffers.
- *
- * @buffer: char *
- * @size: int
- * Return: void
- */
-void clear_buffer(char *buffer, int size)
-{
-	int i;
-
-	for (i = 0; i < size; ++i)
-	{
-		buffer[i] = '\0';
-	}
-}
 
 
 /**
@@ -69,9 +53,8 @@ char *_realloc(char *buffer, int size)
 	new_buffer = buffer_alloc(size);
 	if (new_buffer)
 	{
-		_memcpy(new_buffer, buffer, BUFFER_SIZE);
+		_memcpy(new_buffer, buffer, _strlen(buffer));
 		free(buffer);
-		BUFFER_SIZE = size;
 	}
 	else
 		return (NULL);

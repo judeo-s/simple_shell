@@ -1,4 +1,6 @@
 #include <unistd.h>
+
+
 /**
  * _strlen - a function that returns the size of a string
  *
@@ -19,6 +21,22 @@ int _strlen(char *s)
 
 
 /**
+ * _puts - a function that prints a string
+ *
+ * @str: Pointer to an char variable
+ * Return: void
+ */
+void _puts(char *str)
+{
+	int i;
+
+	if (str)
+		for (i = 0; str[i] != '\0'; ++i)
+			write(1, &str[i], 1);
+}
+
+
+/**
  * _strcpy - a function that copies string from a source to destination
  *
  * @dest: Pointer to a char variable
@@ -27,17 +45,16 @@ int _strlen(char *s)
  */
 char *_strcpy(char *dest, char *src)
 {
-	char *p;
-	char *x = dest;
+	int x, y;
 
-	if (dest == NULL || src == NULL)
-		return (NULL);
-
-	for (p = src; *p; p++)
+	y = 0;
+	for (x = 0; src[x] != '\0'; x++)
 	{
-		*x = *p;
-		x++;
+		dest[x] = src[x];
+		y++;
 	}
+
+	dest[y] = '\0';
 	return (dest);
 }
 
@@ -63,4 +80,33 @@ char *_strncpy(char *dest, char *src, int n)
 		dest[i] = '\0';
 	}
 	return (dest);
+}
+
+
+/**
+ *_strcmp - a function to copies a strings to n-size of another string
+ *
+ * @s1: char pointer
+ * @s2: char pointer
+ * Return: int
+ */
+int _strcmp(char *s1, char *s2)
+{
+	int src_len = _strlen(s1);
+	int i, result = 0;
+
+	for (i = 0; i < src_len; i++)
+	{
+		if (s1[i] == s2[i])
+		{
+			continue;
+		}
+		else
+		{
+			result = s1[i] - s2[i];
+			break;
+		}
+	}
+
+	return (result);
 }

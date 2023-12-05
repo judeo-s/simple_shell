@@ -44,9 +44,10 @@ int word_count(char *string)
  * tokenizer - a function that creates a token of strings.
  *
  * @string: char *
+ * @delim: char *
  * Return: char **
  */
-char **tokenizer(char *string)
+char **tokenizer(char *string, char *delim)
 {
 	char **token = NULL, *word = NULL;
 	int counter = 0, words, w_len;
@@ -54,7 +55,7 @@ char **tokenizer(char *string)
 	words = word_count(string);
 	token = malloc((words + 1) * sizeof(char *));
 
-	word = strtok(string, " ");
+	word = strtok(string, delim);
 	while (word != NULL)
 	{
 		w_len = _strlen(word) + 1;
@@ -67,7 +68,7 @@ char **tokenizer(char *string)
 		clear_buffer(token[counter], w_len);
 		_strcpy(token[counter], word);
 		counter++;
-		word = strtok(NULL, " ");
+		word = strtok(NULL, delim);
 	}
 	token[counter] = NULL;
 	return (token);

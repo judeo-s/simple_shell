@@ -4,6 +4,13 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 
+
+/**
+ * clean_input - a function that cleans input from terminal
+ *
+ * @string: char *
+ * Return: char *
+ */
 char *clean_input(char *string)
 {
 	char *str = NULL;
@@ -19,7 +26,14 @@ char *clean_input(char *string)
 	return (str);
 }
 
-void shell()
+
+/**
+ * shell - a function that begins the terminal prompt
+ *
+ * @env: char **
+ * Return: void
+ */
+void shell(char **env)
 {
 	char *input = NULL;
 	size_t n_read;
@@ -27,12 +41,11 @@ void shell()
 	char **token = NULL;
 	int words;
 
-	printf("$ ");
-
+	_puts("$ ");
 	n_read = getline(&input, &len, stdin);
 	input = clean_input(input);
-	token = tokenizer(input);
-	process_handler(token);	
+	token = tokenizer(input, " ");
+	process_handler(token, env);
 	words = word_count(input);
 	free_token(token, words);
 	free(input);
