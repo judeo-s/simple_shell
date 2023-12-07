@@ -13,15 +13,21 @@
  */
 void process_handler(char **token, char **env)
 {
-	int key = get_key("PATH", env);
-	char *value = get_value(key, env);
-	char **dirs = tokenizer(value, ":");
+	pid_t pid = fork();
 
-	print_env(dirs);
-
-	if (execve(token[0], token, dirs) == -1)
+	if (pid == -1)
 	{
 		perror("Error:");
 	}
-
+	else if (pid == 0)
+	{
+		if (execve(token[0], token, NULL) == -1)
+		{
+			perror("Error:");
+		}
+	}
+	else
+	{
+		wait(NULL);
+	};
 }

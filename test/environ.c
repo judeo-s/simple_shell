@@ -72,7 +72,7 @@ int get_key(char *var_name, char **env)
  */
 char *get_value(int key, char **env)
 {
-	int len = _strlen(env[key]);
+	int len = _strlen(env[key]) + 1;
 	char *value = NULL;
 
 	value = buffer_alloc(len);

@@ -41,21 +41,17 @@ void _puts(char *str)
  *
  * @dest: Pointer to a char variable
  * @src:  Pointer to a char variable
- * Return: *char
+ * Return: void
  */
-char *_strcpy(char *dest, char *src)
+void _strcpy(char *dest, char *src)
 {
 	int x, y;
-
+	int len = _strlen(src);
 	y = 0;
-	for (x = 0; src[x] != '\0'; x++)
+	for (x = 0; x < len; x++)
 	{
 		dest[x] = src[x];
-		y++;
 	}
-
-	dest[y] = '\0';
-	return (dest);
 }
 
 
@@ -65,9 +61,9 @@ char *_strcpy(char *dest, char *src)
  * @dest: char pointer
  * @src: char pointer
  * @n: int
- * Return: char pointer
+ * Return: void
  */
-char *_strncpy(char *dest, char *src, int n)
+void _strncpy(char *dest, char *src, int n)
 {
 	int i;
 
@@ -75,11 +71,6 @@ char *_strncpy(char *dest, char *src, int n)
 	{
 		dest[i] = src[i];
 	}
-	for (; i < n; i++)
-	{
-		dest[i] = '\0';
-	}
-	return (dest);
 }
 
 

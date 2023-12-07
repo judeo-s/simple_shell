@@ -38,15 +38,18 @@ void shell(char **env)
 	char *input = NULL;
 	size_t n_read;
 	size_t len = 0;
-	char **token = NULL;
-	int words;
+	char **command = NULL;
+	char **alias = NULL;
 
 	_puts("$ ");
 	n_read = getline(&input, &len, stdin);
+
+	if (!n_read)
+		exit (0);
 	input = clean_input(input);
-	token = tokenizer(input, " ");
-	process_handler(token, env);
-	words = word_count(input);
-	free_token(token, words);
-	free(input);
+	command = tokenizer(input, " ");
+	command_handler(command, env, alias);
+
+	free_token(command);
+	_free(input);
 }

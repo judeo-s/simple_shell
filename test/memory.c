@@ -54,10 +54,25 @@ char *_realloc(char *buffer, int size)
 	if (new_buffer)
 	{
 		_memcpy(new_buffer, buffer, _strlen(buffer));
-		free(buffer);
 	}
 	else
 		return (NULL);
 
 	return (new_buffer);
+}
+
+
+/**
+ * __free - a function that frees up some memory space
+ *
+ * @ptr: void **
+ * Return: void
+ */
+void __free(void **ptr)
+{
+	if (*ptr != NULL && ptr != NULL)
+	{
+		free(*ptr);
+		*ptr = NULL;
+	}
 }

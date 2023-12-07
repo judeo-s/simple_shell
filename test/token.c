@@ -9,7 +9,7 @@
  * @string: char *
  * Return: int
  */
-int word_count(char *string)
+int word_count(char *string, char *delim)
 {
 	int len, length = 0;
 	char *str = NULL, *word = NULL;
@@ -29,12 +29,14 @@ int word_count(char *string)
 	if (!str)
 		return (0);
 
-	word = strtok(str, " ");
+	word = strtok(str, delim);
 	while (word != NULL)
 	{
 		length++;
-		word = strtok(NULL, " ");
+		word = strtok(NULL, delim);
 	}
+
+	_free(str);
 	return (length);
 }
 
@@ -49,20 +51,24 @@ int word_count(char *string)
  */
 char **tokenizer(char *string, char *delim)
 {
-	char **token = NULL, *word = NULL;
+	char **token = NULL, *word = NULL, *temp_string = NULL;
 	int counter = 0, words, w_len;
 
-	words = word_count(string);
-	token = malloc((words + 1) * sizeof(char *));
+	words = word_count(string, delim);
+	temp_string = buffer_alloc(_strlen(string) + 1);
+	token = (char **)malloc((words + 1) * sizeof(char *));
 
-	word = strtok(string, delim);
-	while (word != NULL)
+	if (temp_string)
+		_strcpy(temp_string, string);
+	
+	word = strtok(temp_string, delim);
+	while (counter < words)
 	{
 		w_len = _strlen(word) + 1;
-		token[counter] = (char *)malloc(sizeof(char) * w_len);
+		token[counter] = (char *)buffer_alloc(sizeof(char) * w_len);
 		if (!token[counter])
 		{
-			free_token(token, counter + 1);
+			free_token(token);
 			break;
 		}
 		clear_buffer(token[counter], w_len);
@@ -71,7 +77,25 @@ char **tokenizer(char *string, char *delim)
 		word = strtok(NULL, delim);
 	}
 	token[counter] = NULL;
+	_free(temp_string);
 	return (token);
+}
+
+
+/**
+ * token_len - a function to get the length of a token
+ *
+ * @token: char **
+ * Return: int
+ */
+int token_len(char **token)
+{
+	int counter = 0;
+	while (token[counter])
+	{
+		counter++;
+	}
+	return (counter);
 }
 
 
@@ -82,14 +106,15 @@ char **tokenizer(char *string, char *delim)
  * @length: int
  * Return: void
  */
-void free_token(char **token, int length)
+void free_token(char **token)
 {
 	int i;
+	int length = token_len(token);
 
 	for (i = 0; i < length; i++)
 	{
-		free(token[i]);
+		_free(token[i]);
 	}
 
-	free(token);
+	_free(token);
 }
