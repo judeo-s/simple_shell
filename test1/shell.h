@@ -64,6 +64,6 @@ int _strcmp(char *s1, char *s2);
 void _puts(char *str);
 
 char *_strcat(char *dest, char *src);
-int handle_eof(ssize_t n_read, char *input)
+int eof_handler(ssize_t n_read, char *input);
 
 #endif

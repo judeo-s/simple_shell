@@ -23,28 +23,53 @@ char *clean_input(char *string)
 }
 
 /**
- * handle_eof - a function to handle the end-of-file condition.
+ * sigintHandler - blocks ctrl-C and prints a new prompt
+ * @sig_num: the signal number
  *
+ * Return: void
+ */
+void sigintHandler(int sig_num)
+{
+	ssize_t written;
+	char prompt[] = "$ ";
+	
+	(void)sig_num;  // To suppress the unused parameter warning
+
+	// Write the prompt to stdout
+	written = write(STDOUT_FILENO, prompt, sizeof(prompt) - 1);
+	if (written == -1)
+	{
+		perror("write");
+		_exit(EXIT_FAILURE);
+	}
+}
+
+/**
+ * handle_eof - handles the end-of-file condition (Ctrl-D)
  * @n_read: ssize_t
  * @input: char *
+ *
  * Return: int (1 if EOF is encountered, 0 otherwise)
  */
-
-int handle_eof(ssize_t n_read, char *input)
+int eof_handler(ssize_t n_read, char *input)
 {
 	if (n_read == -1)
 	{
 		if (feof(stdin))
 		{
-		// Handle end-of-file (Ctrl+D) condition
-			free(input);
-			printf("\n"); // Optionally print a newline before exiting
+			// Handle end-of-file (Ctrl-D) condition
+			_free(input);
+			if (write(STDOUT_FILENO, "\n", 1) == -1)
+			{
+				perror("write");
+				_exit(EXIT_FAILURE);
+			}
 			exit(EXIT_SUCCESS);
 		}
 		else
 		{
 			perror("getline");
-			exit(EXIT_FAILURE);
+			_exit(EXIT_FAILURE);
 		}
 	}
 	return 0;
@@ -59,16 +84,29 @@ int handle_eof(ssize_t n_read, char *input)
  */
 void shell(char **env)
 {
+	if (signal(SIGINT, sigintHandler) == SIG_ERR)
+	{
+		perror("signal");
+		exit(EXIT_FAILURE);
+	}
+
 	char *input = NULL;
 	size_t n_read;
 	size_t len = 0;
 	char **command = NULL;
 	char **alias = NULL;
 
-	_puts("$ ");
+	char prompt[] = "$ ";
+	
+	// Write the prompt to stdout
+	if (write(STDOUT_FILENO, prompt, sizeof(prompt) - 1) == -1)
+	{
+		perror("write");
+		exit(EXIT_FAILURE);
+	}
 	n_read = getline(&input, &len, stdin);
-
-	if (handle_eof(n_read, input))
+	
+	if (eof_handler(n_read, input))
 		return;
 	//if (!n_read)
 	//	exit (0);
