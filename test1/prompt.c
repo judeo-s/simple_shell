@@ -32,8 +32,17 @@ void sigintHandler(int sig_num)
 {
 	ssize_t written;
 	char prompt[] = "$ ";
-	
+ 	const char newline = '\n';
+
 	(void)sig_num;  // To suppress the unused parameter warning
+	
+	// Write a newline character to stdout
+	written = write(STDOUT_FILENO, &newline, 1);
+	if (written == -1)
+	{
+		perror("write");
+		_exit(EXIT_FAILURE);
+	}
 
 	// Write the prompt to stdout
 	written = write(STDOUT_FILENO, prompt, sizeof(prompt) - 1);
