@@ -1,8 +1,4 @@
 #include "shell.h"
-#include <sys/wait.h>
-#include <unistd.h>
-#include <stdio.h>
-
 
 /**
  * process_handler - that creates forks a process for any command

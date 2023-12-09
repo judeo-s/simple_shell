@@ -1,6 +1,4 @@
 #include "shell.h"
-#include <unistd.h>
-
 
 /**
  * main - a function that begins the entire progrom
