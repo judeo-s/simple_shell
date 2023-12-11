@@ -13,6 +13,7 @@
 #include <string.h>
 #include <errno.h>
 
+#define BUFFER_SIZE 1024
 #define _free(ptr) __free((void **)&(ptr))
 
 typedef struct builtin_command_list
@@ -65,5 +66,6 @@ void _puts(char *str);
 
 char *_strcat(char *dest, char *src);
 int eof_handler(ssize_t n_read, char *input);
+ssize_t getLine(char **linepointer, size_t *n, FILE *stream);
 
 #endif

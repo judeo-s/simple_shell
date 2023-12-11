@@ -77,7 +77,7 @@ int eof_handler(ssize_t n_read, char *input)
 		}
 		else
 		{
-			perror("getline");
+			perror("getLine");
 			_exit(EXIT_FAILURE);
 		}
 	}
@@ -113,7 +113,7 @@ void shell(char **env)
 		perror("write");
 		exit(EXIT_FAILURE);
 	}
-	n_read = getline(&input, &len, stdin);
+	n_read = getLine(&input, &len, stdin);
 	
 	if (eof_handler(n_read, input))
 		return;
