@@ -6,28 +6,6 @@
 
 
 /**
- * clean_input - a function that cleans input from terminal
- *
- * @string: char *
- * Return: char *
- */
-char *clean_input(char *string)
-{
-	char *str = NULL;
-	int len;
-
-	len = _strlen(string);
-	str = (char *)malloc(sizeof(char) * len);
-	if (!str)
-		return (NULL);
-
-	clear_buffer(str, len);
-	_strncpy(str, string, len - 1);
-	return (str);
-}
-
-
-/**
  * shell - a function that begins the terminal prompt
  *
  * @env: char **
@@ -42,14 +20,28 @@ void shell(char **env)
 	char **alias = NULL;
 
 	_puts("$ ");
-	n_read = getline(&input, &len, stdin);
+	n_read = _getline(&input, &len, stdin);
 
-	if (!n_read)
-		exit (0);
-	input = clean_input(input);
+	if (n_read == -1)
+	{
+		_free(input);
+		free_token(env);
+		_puts("\n");
+		exit(0);
+	}
+	_strstrip(input, '\n');
+
+	if (!input || !_strlen(input) || is_only_spaces(input))
+	{
+		_free(input);
+		return;
+	}
+
 	command = tokenizer(input, " ");
+	_free(input);
 	command_handler(command, env, alias);
 
+	len = 0;
 	free_token(command);
 	_free(input);
 }

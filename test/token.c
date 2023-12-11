@@ -7,6 +7,7 @@
  * word_count - a function that counts the number of words in a string.
  *
  * @string: char *
+ * @delim: char *
  * Return: int
  */
 int word_count(char *string, char *delim)
@@ -60,7 +61,7 @@ char **tokenizer(char *string, char *delim)
 
 	if (temp_string)
 		_strcpy(temp_string, string);
-	
+
 	word = strtok(temp_string, delim);
 	while (counter < words)
 	{
@@ -91,6 +92,7 @@ char **tokenizer(char *string, char *delim)
 int token_len(char **token)
 {
 	int counter = 0;
+
 	while (token[counter])
 	{
 		counter++;
@@ -100,10 +102,41 @@ int token_len(char **token)
 
 
 /**
+ * token_copy - a function that copy's the content of a token to another.
+ *
+ * @neww: char **
+ * @old: char **
+ * Return: int
+ */
+int token_copy(char **neww, char **old)
+{
+	int len, i = 0, str_len;
+
+	if (!old || !neww)
+		return (0);
+
+	len = token_len(old);
+	while (i < len)
+	{
+		str_len = _strlen(old[i]);
+		neww[i] = buffer_alloc(str_len + 1);
+
+		if (!neww[i])
+		{
+			free_token(neww);
+			return (0);
+		}
+		_strcpy(neww[i], old[i]);
+		i++;
+	}
+	return (1);
+}
+
+
+/**
  * free_token - a function that frees allocated memory for tokens
  *
  * @token: char **
- * @length: int
  * Return: void
  */
 void free_token(char **token)

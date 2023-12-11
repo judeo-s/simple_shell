@@ -47,6 +47,7 @@ void _strcpy(char *dest, char *src)
 {
 	int x, y;
 	int len = _strlen(src);
+
 	y = 0;
 	for (x = 0; x < len; x++)
 	{

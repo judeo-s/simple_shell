@@ -26,14 +26,13 @@ void _memcpy(char *dest, char *src, unsigned int n)
  * @size: int
  * Return: char *
  */
-char *buffer_alloc(int size)
+void *buffer_alloc(int size)
 {
-	static char *buffer;
+	static void *buffer;
 
 	buffer = malloc(size);
 	if (!buffer)
 		return (NULL);
-
 	clear_buffer(buffer, size);
 	return (buffer);
 }
@@ -46,18 +45,18 @@ char *buffer_alloc(int size)
  * @size: int
  * Return: char *
  */
-char *_realloc(char *buffer, int size)
+void *_realloc(void *buffer, int size)
 {
-	static char *new_buffer;
+	void *new_buffer;
 
 	new_buffer = buffer_alloc(size);
 	if (new_buffer)
 	{
-		_memcpy(new_buffer, buffer, _strlen(buffer));
+		_memcpy(new_buffer, buffer, size);
+		_free(buffer);
 	}
 	else
 		return (NULL);
-
 	return (new_buffer);
 }
 

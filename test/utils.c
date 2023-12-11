@@ -1,4 +1,5 @@
 #include "shell.h"
+#include <stdio.h>
 #include <unistd.h>
 
 /**
@@ -45,4 +46,31 @@ void print_buffer(char *buffer)
 		}
 		written += result;
 	}
+}
+
+
+/**
+ * _fileno - a function that returns the file number of a fuke stream.
+ *
+ * @stream: FILE *
+ * Return: int
+ */
+int _fileno(FILE *stream)
+{
+	int file_descriptor;
+
+	if (stream == NULL)
+		return (-1);
+
+	file_descriptor = -1;
+	if (stream == stdin)
+		file_descriptor = STDIN_FILENO;
+
+	if (stream == stdout)
+		file_descriptor = STDOUT_FILENO;
+
+	if (stream == stderr)
+		file_descriptor = STDERR_FILENO;
+
+	return (file_descriptor);
 }

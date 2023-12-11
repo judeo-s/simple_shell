@@ -2,11 +2,26 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+
+/**
+ * _alias - a function that is used to create alias commands
+ *
+ * @command: char **
+ * @env: char **
+ * Return: int
+ */
+int _alias(char **command, char **env)
+{
+	return (0);
+}
+
+
 /**
  * alias_handler - a function that handles alias processing
  *
- * @token: char **
- * @env: char **
+ * @command: char **
+ * @environ: char **
+ * @aliases: char **
  * Return: void
  */
 void alias_handler(char **command, char **environ, char **aliases)
