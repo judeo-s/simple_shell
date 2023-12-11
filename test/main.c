@@ -10,12 +10,13 @@
  * @env: char **
  * Return: int
  */
-int main(int argc __attribute__((unused)), char *argv[], char *env[])
+int main(int argc __attribute__((unused)),
+		char *argv[] __attribute__((unused)), char *env[])
 {
-	signal(SIGINT, signal_handler);
 	char **environ = NULL;
 	int env_len;
 
+	signal(SIGINT, signal_handler);
 	env_len = token_len(env);
 	environ = buffer_alloc(sizeof(char *) * (env_len + 1));
 	token_copy(environ, env);

@@ -41,16 +41,14 @@ void path_handler(char **command, char **environ)
 	char *value = get_value(key, environ);
 	char **dirs = tokenizer(value, "=");
 	char *PATH = dirs[1];
-	char *file = NULL;
 	char **path = tokenizer(PATH, ":");
-	unsigned int i = 0, size;
+	unsigned int i = 0;
 	struct stat st;
 
 	get_absolute(path, command[0]);
 	_free(command[0]);
 	while (path[i])
 	{
-		size = _strlen(path[i]);
 		if (stat(path[i], &st) == 0)
 		{
 			command[0] = buffer_alloc(_strlen(path[i]) + 1);

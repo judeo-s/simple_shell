@@ -10,7 +10,8 @@
  * @env: char **
  * Return: int
  */
-int _alias(char **command, char **env)
+int _alias(char **command __attribute__((unused)),
+		char **env __attribute__((unused)))
 {
 	return (0);
 }
@@ -24,7 +25,9 @@ int _alias(char **command, char **env)
  * @aliases: char **
  * Return: void
  */
-void alias_handler(char **command, char **environ, char **aliases)
+void alias_handler(char **command __attribute__((unused)),
+		char **environ __attribute__((unused)),
+		char **aliases __attribute__((unused)))
 {
 	_puts("will work on this latter");
 }

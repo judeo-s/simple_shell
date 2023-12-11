@@ -78,7 +78,7 @@ char *get_value(int key, char **env)
 int add_variable(char *key, char *value, char **env)
 {
 	int len = token_len(env), var_len, result;
-	char **temp, **temp2;
+	char **temp;
 
 	temp = buffer_alloc(sizeof(char *) * (len + 2));
 	if (!temp)

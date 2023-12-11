@@ -9,7 +9,8 @@
  * @env: char **
  * Return: int
  */
-int _cd(char **command, char **env)
+int _cd(char **command __attribute__((unused)),
+		char **env __attribute__((unused)))
 {
 	return (0);
 }
@@ -53,7 +54,8 @@ int _setenv(char **command, char **env)
  * @env: char **
  * Return: int
  */
-int _unsetenv(char **command, char **env)
+int _unsetenv(char **command __attribute__((unused)),
+		char **env __attribute__((unused)))
 {
 	return (0);
 }
@@ -66,7 +68,8 @@ int _unsetenv(char **command, char **env)
  * @env: char **
  * Return: int
  */
-int _env(char **command, char **env)
+int _env(char **command __attribute__((unused)),
+		char **env __attribute__((unused)))
 {
 	print_env(env);
 	return (1);
@@ -80,7 +83,7 @@ int _env(char **command, char **env)
  * @env: char **
  * Return: int
  */
-int __exit(char **command __attribute__((unused)), char **env)
+int __exit(char **command, char **env)
 {
 	free_token(env);
 	free_token(command);

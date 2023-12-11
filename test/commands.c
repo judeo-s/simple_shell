@@ -15,7 +15,7 @@ void command_handler(char **command, char **environ, char **aliases)
 		{"setenv", _setenv}, {"unsetenv", _unsetenv},
 		{"exit", __exit}
 	};
-	int counter = 0, result, success;
+	int counter = 0, result;
 
 	if (!_strcmp("alias", command[0]))
 	{
@@ -29,7 +29,7 @@ void command_handler(char **command, char **environ, char **aliases)
 
 		if (!result)
 		{
-			success = command_list[counter].handler(command, environ);
+			result = command_list[counter].handler(command, environ);
 			return;
 		}
 		counter++;

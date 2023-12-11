@@ -14,7 +14,7 @@
 void shell(char **env)
 {
 	char *input = NULL;
-	size_t n_read;
+	int n_read;
 	size_t len = 0;
 	char **command = NULL;
 	char **alias = NULL;

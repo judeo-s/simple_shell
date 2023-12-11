@@ -62,13 +62,13 @@ void _strstrip(char *str, char c)
  */
 ssize_t _getline(char **lineptr, size_t *n, FILE *stream)
 {
-	if (!lineptr || !n)
-		return (-1);
-
 	ssize_t nread = 0;
 	size_t len = 0;
 	char *line = NULL;
 	char buffer[BUFFER_SIZE];
+	
+	if (!lineptr || !n)
+		return (-1);
 
 	while ((nread = read(_fileno(stream), buffer, BUFFER_SIZE)) > 0)
 	{
