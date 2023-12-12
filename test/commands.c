@@ -8,7 +8,7 @@
  * @aliases: char **
  * Return: void
  */
-void command_handler(char **command, char **environ, char **aliases)
+void command_handler(char **command, char ***environ, char ***aliases)
 {
 	builtin_t command_list[] = {
 		{"cd", _cd}, {"env", _env},
@@ -35,7 +35,7 @@ void command_handler(char **command, char **environ, char **aliases)
 		counter++;
 	}
 
-	path_handler(command, environ);
+	path_handler(command, *environ);
 	if (!command[0])
 	{
 		_puts("Command does not exist\n");

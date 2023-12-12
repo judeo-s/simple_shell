@@ -11,7 +11,7 @@
  * Return: int
  */
 int _alias(char **command __attribute__((unused)),
-		char **env __attribute__((unused)))
+		char ***env __attribute__((unused)))
 {
 	return (0);
 }
@@ -22,12 +22,12 @@ int _alias(char **command __attribute__((unused)),
  *
  * @command: char **
  * @environ: char **
- * @aliases: char **
+ * @__attribute__((unused): unused
  * Return: void
  */
 void alias_handler(char **command __attribute__((unused)),
-		char **environ __attribute__((unused)),
-		char **aliases __attribute__((unused)))
+		char ***environ __attribute__((unused)),
+		char ***aliases __attribute__((unused)))
 {
-	_puts("will work on this latter");
+	_puts("I will work on this later");
 }

@@ -45,18 +45,21 @@ void path_handler(char **command, char **environ)
 	unsigned int i = 0;
 	struct stat st;
 
-	get_absolute(path, command[0]);
-	_free(command[0]);
-	while (path[i])
+	if (stat(command[0], &st) != 0)
 	{
-		if (stat(path[i], &st) == 0)
+		get_absolute(path, command[0]);
+		_free(command[0]);
+		while (path[i])
 		{
-			command[0] = buffer_alloc(_strlen(path[i]) + 1);
-			_strcpy(command[0], path[i]);
-			break;
+			if (stat(path[i], &st) == 0)
+			{
+				command[0] = buffer_alloc(_strlen(path[i]) + 1);
+				_strcpy(command[0], path[i]);
+				break;
+			}
+			else
+				i++;
 		}
-		else
-			i++;
 	}
 	_free(value);
 	free_token(dirs);

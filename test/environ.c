@@ -75,25 +75,26 @@ char *get_value(int key, char **env)
  * @env: char **
  * Return: int
  */
-int add_variable(char *key, char *value, char **env)
+int add_variable(char *key, char *value, char ***env)
 {
-	int len = token_len(env), var_len, result;
-	char **temp;
+	int len = token_len(*env), var_len, result;
+	static char **temp;
 
 	temp = buffer_alloc(sizeof(char *) * (len + 2));
 	if (!temp)
 		return (0);
 
-	result = token_copy(temp, env);
+	result = token_copy(temp, *env);
 	if (result)
 	{
 		var_len = _strlen(key) + _strlen(value) + 2;
 		temp[len] = buffer_alloc(var_len);
-		sprintf(temp[len], "%s=%s", key, value);
+		_strcat(temp[len], key);
+		_strcat(temp[len], "=");
+		_strcat(temp[len], value);
 		temp[len + 1] = NULL;
-		env = malloc(sizeof(char *) * (len + 2));
-		token_copy(env, temp);
-		free_token(temp);
+		free_token(*env);
+		*env = temp;
 		return (1);
 	}
 	return (0);

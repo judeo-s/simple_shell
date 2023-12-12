@@ -11,7 +11,7 @@
  * @env: char **
  * Return: void
  */
-void process_handler(char **token, char **env)
+void process_handler(char **token, char ***env)
 {
 	pid_t pid = fork();
 
@@ -21,7 +21,7 @@ void process_handler(char **token, char **env)
 	}
 	else if (pid == 0)
 	{
-		if (execve(token[0], token, env) == -1)
+		if (execve(token[0], token, *env) == -1)
 		{
 			perror("Error:");
 		}

@@ -18,7 +18,7 @@ extern char *input;
 typedef struct builtin_command_list
 {
 	char *command;
-	int (*handler)(char **, char **);
+	int (*handler)(char **, char ***);
 } builtin_t;
 
 
@@ -28,30 +28,30 @@ int word_count(char *stringi, char *delim);
 int token_len(char **token);
 int token_copy(char **neww, char **old);
 
-void shell(char **env);
+void shell(char ***env);
 
 void get_absolute(char **path, char *file);
 void path_handler(char **command, char **environ);
 
 void signal_handler(int sig);
 
-void process_handler(char **token, char **env);
+void process_handler(char **token, char ***env);
 
-void command_handler(char **command, char **environ, char **alias);
+void command_handler(char **command, char ***environ, char ***alias);
 
-void alias_handler(char **command, char **environ, char **aliases);
+void alias_handler(char **command, char ***environ, char ***aliases);
 
-int _alias(char **command, char **env);
-int _cd(char **command, char **env);
-int _setenv(char **command, char **env);
-int _unsetenv(char **command, char **env);
-int _env(char **command, char **env);
-int __exit(char **command, char **env);
+int _alias(char **command, char ***env);
+int _cd(char **command, char ***env);
+int _setenv(char **command, char ***env);
+int _unsetenv(char **command, char ***env);
+int _env(char **command, char ***env);
+int __exit(char **command, char ***env);
 
 void print_env(char *env[]);
 int get_key(char *var_name, char **env);
 char *get_value(int key, char **env);
-int add_variable(char *key, char *value, char **env);
+int add_variable(char *key, char *value, char ***env);
 
 void __free(void **ptr);
 void *_realloc(void *buffer, int size);

@@ -23,7 +23,7 @@ int main(int argc __attribute__((unused)),
 
 	while (1)
 	{
-		shell(environ);
+		shell(&environ);
 	}
 	return (0);
 }

@@ -11,37 +11,43 @@
  * @env: char **
  * Return: void
  */
-void shell(char **env)
+void shell(char ***env)
 {
-	char *input = NULL;
+	char **input = NULL;
 	int n_read;
 	size_t len = 0;
 	char **command = NULL;
 	char **alias = NULL;
+	char *entry = NULL;
+	int i = 0;
 
 	_puts("$ ");
-	n_read = _getline(&input, &len, stdin);
-
+	n_read = _getline(&entry, &len, stdin);
 	if (n_read == -1)
 	{
 		_free(input);
-		free_token(env);
+		free_token(*env);
 		_puts("\n");
 		exit(0);
 	}
-	_strstrip(input, '\n');
 
-	if (!input || !_strlen(input) || is_only_spaces(input))
+	input = tokenizer(entry, "\n");
+	_free(entry);
+	while (input[i])
 	{
-		_free(input);
-		return;
+		if (!input[i] || !_strlen(input[i]) || is_only_spaces(input[i]))
+		{
+			i++;
+			continue;
+		}
+		command = tokenizer(input[i], " ");
+		if (!_strcmp(command[i], "exit"))
+			free_token(input);
+
+		command_handler(command, env, &alias);
+		len = 0;
+		free_token(command);
+		i++;
 	}
-
-	command = tokenizer(input, " ");
-	_free(input);
-	command_handler(command, env, alias);
-
-	len = 0;
-	free_token(command);
-	_free(input);
+	free_token(input);
 }
