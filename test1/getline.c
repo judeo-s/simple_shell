@@ -2,7 +2,7 @@
 
 
 /**
- * custom_getline - read a line from standard input
+ * getLine - read a line from standard input
  * @linepointer: pointer to the buffer where the line will be stored
  * @n: pointer to the size of the buffer
  * @stream: file stream (not used in this case, always set to stdin)
@@ -50,7 +50,7 @@ ssize_t getLine(char **linepointer, size_t *n, FILE *stream)
 			// Copy character to lineptr and move indices
 			(*linepointer)[total_bytes++] = buffer[buffer_index++];
 		}
-		// Check if the buffer is full, and if so, resize lineptr
+		// Check if the buffer is full, and if so, resize linepointer
 		if (total_bytes >= *n - 1)
 		{
 			*n *= 2;

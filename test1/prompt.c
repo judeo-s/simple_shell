@@ -54,7 +54,7 @@ void sigintHandler(int sig_num)
 }
 
 /**
- * handle_eof - handles the end-of-file condition (Ctrl-D)
+ * eof_handler - handles the end-of-file condition (Ctrl-D)
  * @n_read: ssize_t
  * @input: char *
  *
@@ -67,18 +67,18 @@ int eof_handler(ssize_t n_read, char *input)
 		if (feof(stdin))
 		{
 			// Handle end-of-file (Ctrl-D) condition
-			_free(input);
+			free(input);
 			if (write(STDOUT_FILENO, "\n", 1) == -1)
 			{
 				perror("write");
-				_exit(EXIT_FAILURE);
+				exit(EXIT_FAILURE);
 			}
 			exit(EXIT_SUCCESS);
 		}
 		else
 		{
 			perror("getLine");
-			_exit(EXIT_FAILURE);
+			exit(EXIT_FAILURE);
 		}
 	}
 	return 0;
