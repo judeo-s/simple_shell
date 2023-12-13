@@ -108,13 +108,16 @@ int _env(char **command __attribute__((unused)),
  */
 int __exit(char **command, char ***env)
 {
-	int status = 0;
-
 	if (command[1])
 	{
 		status = _atoi(command[1]);
+		if (status < 0)
+		{
+			_perror(command[0], " illegal number!! Use positive integer");
+			return (0);
+		}
 	}
-
+	free_token(input);
 	free_token(*env);
 	free_token(command);
 	exit(status);

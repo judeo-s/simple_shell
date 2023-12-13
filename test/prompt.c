@@ -13,7 +13,7 @@
  */
 void shell(char ***env)
 {
-	char **input = NULL, **command = NULL, **alias = NULL, *entry = NULL;
+	char **command = NULL, **alias = NULL, *entry = NULL;
 	int n_read, i = 0;
 	size_t len = 0;
 
@@ -22,7 +22,6 @@ void shell(char ***env)
 	n_read = _getline(&entry, &len, stdin);
 	if (n_read == -1)
 	{
-		_free(input);
 		free_token(*env);
 		if (isatty(STDIN_FILENO))
 			_puts("\n");
@@ -30,7 +29,8 @@ void shell(char ***env)
 	}
 	input = tokenizer(entry, "\n");
 	_free(entry);
-	row++;
+	if (isatty(STDIN_FILENO))
+		row++;
 	while (input[i])
 	{
 		if (!input[i] || !_strlen(input[i]) || is_only_spaces(input[i])
@@ -44,12 +44,15 @@ void shell(char ***env)
 		if (!isatty(STDIN_FILENO))
 			row++;
 		command = tokenizer(input[i], " ");
-		if (!_strcmp(command[0], "exit"))
-			free_token(input);
 		command_handler(command, env, &alias);
-		free_token(command);
+		if (!command[0])
+		{
+			free_token(command);
+			break;
+		}
 		len = 0;
 		i++;
+		free_token(command);
 	}
 	free_token(input);
 }

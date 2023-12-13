@@ -2,7 +2,9 @@
 #include <unistd.h>
 #include <signal.h>
 
+int status;
 unsigned long row;
+char **input;
 /**
  * main - a function that begins the entire progrom
  *

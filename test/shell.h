@@ -7,7 +7,8 @@
 #define _free(ptr) __free((void **)&(ptr))
 
 extern unsigned long row;
-extern char **environ;
+extern char **input, **environ;
+extern int status;
 
 /**
  * struct builtin_command_list - a struct used to create a list of builtins

@@ -2,6 +2,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <errno.h>
 
 
 /**
@@ -28,6 +29,8 @@ void process_handler(char **token, char ***env)
 	}
 	else
 	{
-		wait(NULL);
-	};
+		wait(&status);
+		if (WIFEXITED(status))
+			status = WEXITSTATUS(status);
+	}
 }
