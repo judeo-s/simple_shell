@@ -17,13 +17,13 @@ void process_handler(char **token, char ***env)
 
 	if (pid == -1)
 	{
-		perror("Error:");
+		perror("error:");
 	}
 	else if (pid == 0)
 	{
 		if (execve(token[0], token, *env) == -1)
 		{
-			perror("Error:");
+			perror("error:");
 		}
 	}
 	else

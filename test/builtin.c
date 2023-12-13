@@ -30,7 +30,7 @@ int _setenv(char **command, char ***env)
 
 	if (!command[1] || !command[2])
 	{
-		_perror("Command syntax: setenv VARIABLE VALUE\n");
+		_perror(command[0], "command syntax is setenv VARIABLE VALUE");
 		return (0);
 	}
 
@@ -72,13 +72,14 @@ int _unsetenv(char **command __attribute__((unused)),
 
 	if (!command[1])
 	{
-		_perror("Command syntax: unsetenv VARIABLE\n");
+		_perror(command[0], "command syntax is unsetenv VARIABLE");
 		return (0);
 	}
 	result = delete_variable(command[1], env);
 	if (result)
 		return (1);
 
+	_perror(command[0], "variable does not exist");
 	return (0);
 }
 

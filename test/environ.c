@@ -115,11 +115,7 @@ int delete_variable(char *key, char ***env)
 
 	index = get_key(key, *env);
 	if (index == -1)
-	{
-		_perror(key);
-		_perror(" variable does not exist.\n");
 		return (0);
-	}
 
 	size = token_len(*env);
 	_free(array[index]);

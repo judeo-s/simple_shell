@@ -6,8 +6,8 @@
 #define BUFFER_SIZE 1024
 #define _free(ptr) __free((void **)&(ptr))
 
+extern unsigned long row;
 extern char **environ;
-extern char *input;
 
 /**
  * struct builtin_command_list - a struct used to create a list of builtins
@@ -78,5 +78,5 @@ int is_only_spaces(char *str);
 int _istab(int c);
 int is_only_tabs(char *str);
 
-void _perror(char *message);
+void _perror(char *command, char *message);
 #endif

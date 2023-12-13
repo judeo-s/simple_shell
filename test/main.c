@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <signal.h>
 
+unsigned long row;
 /**
  * main - a function that begins the entire progrom
  *
@@ -14,8 +15,11 @@ int main(int argc __attribute__((unused)),
 		char *argv[] __attribute__((unused)), char *env[])
 {
 	char **environ = NULL;
-	int env_len;
+	int env_len = 0;
 
+	row = 0;
+	env_len = env_len + 0;
+	row = row + 0;
 	signal(SIGINT, signal_handler);
 	env_len = token_len(env);
 	environ = buffer_alloc(sizeof(char *) * (env_len + 1));

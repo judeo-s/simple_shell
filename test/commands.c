@@ -10,6 +10,7 @@
  */
 void command_handler(char **command, char ***environ, char ***aliases)
 {
+	char cmd[BUFFER_SIZE];
 	builtin_t command_list[] = {
 		{"cd", _cd}, {"env", _env},
 		{"setenv", _setenv}, {"unsetenv", _unsetenv},
@@ -17,6 +18,8 @@ void command_handler(char **command, char ***environ, char ***aliases)
 	};
 	int counter = 0, result;
 
+	clear_buffer(cmd, BUFFER_SIZE);
+	_strcpy(cmd, command[0]);
 	if (!_strcmp("alias", command[0]))
 	{
 		alias_handler(command, environ, aliases);
@@ -38,7 +41,7 @@ void command_handler(char **command, char ***environ, char ***aliases)
 	path_handler(command, *environ);
 	if (!command[0])
 	{
-		_puts("Command does not exist\n");
+		_perror(cmd, "not found");
 		return;
 	}
 	process_handler(command, environ);

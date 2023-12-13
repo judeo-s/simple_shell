@@ -96,8 +96,6 @@ int _atoi(char *s)
 
 		else if (s[i] > '9' || s[i] < '0')
 		{
-			_perror(s);
-			_perror(" is not an integer\n");
 			return (0);
 		}
 		i++;
