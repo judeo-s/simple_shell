@@ -6,6 +6,50 @@
 
 
 /**
+ * remove_comments - a function that removes comments from inputs
+ *
+ * @command: char *
+ * Return: void
+ */
+void remove_comments(char **command)
+{
+	char *comment_start, *prev_char;
+
+	comment_start = _strchr(*command, '#');
+	if (comment_start != NULL)
+	{
+		prev_char = comment_start - 1;
+		if (_isspace(*prev_char))
+			*comment_start = '\0';
+	}
+}
+
+
+/**
+ * input_handler - a function that processes the user's input.
+ *
+ * @command: char ***
+ * @input: char *
+ * @env: char ***
+ * @alias: char **
+ * Return: int
+ */
+int input_handler(char ***command, char *input, char ***env, char **alias)
+{
+	_strstrip(input, 39);
+	_strstrip(input, '"');
+	if (!isatty(STDIN_FILENO))
+		row++;
+	*command = tokenizer(input, " ");
+	if (*command)
+		command_handler(*command, env, &alias);
+	else
+		return (0);
+	return (1);
+}
+
+
+/**
  * shell - a function that begins the terminal prompt
  *
  * @env: char **
@@ -14,7 +58,7 @@
 void shell(char ***env)
 {
 	char **command = NULL, **alias = NULL, *entry = NULL;
-	int n_read, i = 0;
+	int n_read, i = 0, result;
 	size_t len = 0;
 
 	if (isatty(STDIN_FILENO))
@@ -34,18 +78,14 @@ void shell(char ***env)
 	while (input[i])
 	{
 		if (!input[i] || !_strlen(input[i]) || is_only_spaces(input[i])
-				|| is_only_tabs(input[i]))
+				|| is_only_tabs(input[i]) || input[i][0] == '#')
 		{
 			i++;
 			continue;
 		}
-		_strstrip(input[i], 39);
-		_strstrip(input[i], '"');
-		if (!isatty(STDIN_FILENO))
-			row++;
-		command = tokenizer(input[i], " ");
-		command_handler(command, env, &alias);
-		if (!command[0])
+		remove_comments(&input[i]);
+		result = input_handler(&command, input[i], env, alias);
+		if (!result)
 		{
 			free_token(command);
 			break;

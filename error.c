@@ -6,6 +6,7 @@
  * _perror - a function that is used to write custom messages to stderr
  *
  * @message: char *
+ * @command: char *
  * Return: void
  */
 void _perror(char *command, char *message)
