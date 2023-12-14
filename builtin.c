@@ -117,6 +117,7 @@ int __exit(char **command, char ***env)
 			return (0);
 		}
 	}
+	free_token(multi_command);
 	free_token(input);
 	free_token(*env);
 	free_token(command);

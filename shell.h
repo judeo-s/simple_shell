@@ -7,7 +7,7 @@
 #define _free(ptr) __free((void **)&(ptr))
 
 extern unsigned long row;
-extern char **input, **environ;
+extern char **input, **environ, **multi_command;
 extern int status;
 
 /**

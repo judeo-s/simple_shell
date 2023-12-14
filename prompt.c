@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <sys/wait.h>
 
+char **multi_command;
+
 
 /**
  * remove_comments - a function that removes comments from inputs
@@ -36,15 +38,31 @@ void remove_comments(char **command)
  */
 int input_handler(char ***command, char *input, char ***env, char **alias)
 {
-	_strstrip(input, 39);
-	_strstrip(input, '"');
+	int i = 0;
+
 	if (!isatty(STDIN_FILENO))
 		row++;
-	*command = tokenizer(input, " ");
-	if (*command)
-		command_handler(*command, env, &alias);
-	else
-		return (0);
+
+	multi_command = tokenizer(input, ";");
+	while(multi_command[i])
+	{
+		if (!multi_command[i] || !_strlen(multi_command[i]) || is_only_spaces(multi_command[i])
+				|| is_only_tabs(multi_command[i]) || multi_command[i][0] == '#')
+		{
+			i++;
+			continue;	
+		}
+		_strstrip(input, 39);
+		_strstrip(multi_command[i], '"');
+		*command = tokenizer(multi_command[i], " ");
+		if (*command)
+		{
+			command_handler(*command, env, &alias);
+			free_token(*command);
+		}
+		i++;
+	}
+	free_token(multi_command);
 	return (1);
 }
 
@@ -92,7 +110,6 @@ void shell(char ***env)
 		}
 		len = 0;
 		i++;
-		free_token(command);
 	}
 	free_token(input);
 }
