@@ -44,13 +44,14 @@ int input_handler(char ***command, char *input, char ***env, char **alias)
 		row++;
 
 	multi_command = tokenizer(input, ";");
-	while(multi_command[i])
+	while (multi_command[i])
 	{
-		if (!multi_command[i] || !_strlen(multi_command[i]) || is_only_spaces(multi_command[i])
+		if (!multi_command[i] || !_strlen(multi_command[i])
+				|| is_only_spaces(multi_command[i])
 				|| is_only_tabs(multi_command[i]) || multi_command[i][0] == '#')
 		{
 			i++;
-			continue;	
+			continue;
 		}
 		_strstrip(input, 39);
 		_strstrip(multi_command[i], '"');
