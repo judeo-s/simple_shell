@@ -52,6 +52,8 @@ int cd_directory(char *path, char ***env)
 		old_token = tokenizer(old, "=");
 		set_DIRVAR(env, "OLDPWD");
 		chdir(old_token[1]);
+		_puts(old_token[1]);
+		_puts("\n");
 		set_DIRVAR(env, "PWD");
 
 		_free(old);
