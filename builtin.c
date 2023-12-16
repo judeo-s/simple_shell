@@ -1,5 +1,6 @@
 #include "shell.h"
 #include <stdlib.h>
+#include <unistd.h>
 
 
 /**
@@ -9,10 +10,31 @@
  * @env: char **
  * Return: int
  */
-int _cd(char **command __attribute__((unused)),
-		char ***env __attribute__((unused)))
+int _cd(char **command, char ***env)
 {
-	return (0);
+	int result, key;
+	char *value, **home_token;
+
+	if (command[0] && !command[1])
+	{
+		key = get_key("HOME", *env);
+		value = get_value(key, *env);
+		home_token = tokenizer(value, "=");
+		set_DIRVAR(env, "OLDPWD");
+		chdir(home_token[1]);
+		set_DIRVAR(env, "PWD");
+
+		_free(value);
+		free_token(home_token);
+		result = 1;
+	}
+	if (command[0] && command[1])
+		result = cd_directory(command[1], env);
+
+	if (!result)
+		_perror(command[0], "directory does not exist");
+
+	return (result);
 }
 
 

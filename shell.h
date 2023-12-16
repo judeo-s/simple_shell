@@ -81,4 +81,8 @@ int is_only_tabs(char *str);
 char *_strchr(char *s, char c);
 
 void _perror(char *command, char *message);
+
+int cd_directory(char *path, char ***env);
+int set_DIRVAR(char ***env, char *var);
+
 #endif
